@@ -44,7 +44,8 @@
 		    member = profiles.values[0];
 			console.log()
 		    document.getElementById("profiles").innerHTML = 
-		      "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
+		      "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>" 
+			+ "<img src=\"" + member.pictureUrl +"\"/>"";
 		  }
 		</script>
     </head>
@@ -169,7 +170,14 @@
 		  <p>Facebook is dead serious about supporting a powerful (scary?) API to it's application developers the docs
 			are top notch see below. Initial API limits are crazy high, &gt;5 million MAU, &gt; 100 Million(!) API calls per, 
 			stay below that and your ok.</p>
-			<p>Facebook's <a href="https://developers.facebook.com/policy/">Platform Policies</a>.
+			<p>Here's a nice <a href="https://developers.facebook.com/tools/explorer/145634995501895/?session_id=234616536724000" targetexample of what you can get.  
+			<p>Facebook's <a href="https://developers.facebook.com/policy/">Platform Policies</a>. Here's a key excerpt.
+			<ul><li>Reciprocity and Replicating core functionality: (a) Reciprocity: Facebook Platform enables developers to build personalized, social experiences via the Graph API and related APIs. If you use any Facebook APIs to build personalized or social experiences, you must also enable people to easily share their experiences back with people on Facebook. (b) Replicating core functionality: You may not use Facebook Platform to promote, or to export user data to, a product or service that replicates a core Facebook product or service without our permission
+				</li>
+				<li>The primary purpose of your Canvas or Page Tab app on Facebook must not be to simply redirect users out of the Facebook experience and onto an external site.</li>
+				<li>You must not include data obtained from us in any search engine or directory without our written permission.</li>
+			</ul>
+				</p>
           <p><a href="https://developers.facebook.com/docs/javascript">API Documentation</a> and <a href="https://developers.facebook.com/tools/explorer?method=GET&path=126189%3Ffields%3Did%2Cname">Graph API Explorer</a></p>
           <p><div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="true" data-auto-logout-link="true"></div></p>
         </div>
