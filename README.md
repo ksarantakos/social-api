@@ -1,4 +1,7 @@
 social-api
 ==========
 
-Social-api test
+Social API test.
+
+Deployed at [http://kyri.org/social-api]
+
