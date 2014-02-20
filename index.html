@@ -28,26 +28,64 @@
 		  authorize: true
 		*/</script>
 
+
+		
+		<!-- XXXXXXXXXXXXXXXXX -->
+		
+
+		<!-- NOTE: be sure to set onLoad: onLinkedInLoad -->
 		<script type="text/javascript">
-		  // 2. Runs when the JavaScript framework is loaded
-		  function onLinkedInLoad() {
-		    IN.Event.on(IN, "auth", onLinkedInAuth);
+		function onLinkedInLoad() {
+		  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+		  IN.Event.on(IN, "logout", function() {onLinkedInLogout();});
+		}
+
+		function onLinkedInLogout() {
+		  setConnections({}, {total:0});
+		}
+
+		function onLinkedInLogin() {
+		  // here, we pass the fields as individual string parameters
+		  IN.API.Connections("me")
+		    .fields("id", "firstName", "lastName", "pictureUrl", "publicProfileUrl", "positions", "headline")
+		    .result(function(result, metadata) {
+		      setConnections(result.values, metadata);
+		    });
+		}
+
+		function setConnections(connections) {
+		  var connHTML = "<ul>";
+		  for (id in connections) {
+		    connHTML = connHTML + "<li><a href=\"" + connections[id].publicProfileURL + "\">";
+
+		    /* picture url not always there, must be defensive */
+		    if (connections[id].hasOwnProperty('pictureUrl')) {
+		      connHTML = connHTML + "<img align=\"baseline\" src=\"" + connections[id].pictureUrl + "\"></a>";
+		    }  else {
+		      connHTML = connHTML + "<img align=\"baseline\" src=\"http://static02.linkedin.com/scds/common/u/img/icon/icon_no_photo_80x80.png\"></a>";
+		    }
+
+		    connHTML = connHTML + "&nbsp;<a href=\"" + connections[id].publicProfileUrl + "\">";
+		    connHTML = connHTML + connections[id].firstName + " " + connections[id].lastName + "</a>";
+		    connHTML = connHTML + " " + connections[id].headline + " " + connections[id].lastName;
+		    for (position in connections[id].positions) {
+		        if (position.hasProperty('title')) {
+					connHTML = connHTML + position.title + " at " + position.company;
+				}
+		    }
+		    connHTML = connHTML + " (memberToken: " + connections[id].id + ")</li>";
 		  }
 
-		  // 2. Runs when the viewer has authenticated
-		  function onLinkedInAuth() {
-		    IN.API.Profile("me").result(displayProfiles);
-		  }
-
-		  // 2. Runs when the Profile() API call returns successfully
-		  function displayProfiles(profiles) {
-		    member = profiles.values[0];
-			console.log(member);
-		    document.getElementById("profiles").innerHTML = 
-		      "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + ", you work in the " + member.industry + " industry. "+ "</p>" 
-			+ "<img src=\"" + member.pictureUrl +"\"/>";
-		  }
+		  connHTML = connHTML + "</ul>";
+		  document.getElementById("connectionsdata").innerHTML = connHTML;
+		}
 		</script>
+
+		
+		
+		<!-- XXXXXXXXXXXXXXXXX -->
+		
+		
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -185,10 +223,16 @@
           <h2>LinkedIn</h2>
 			<p>Not quite at the level of Facebook, especially from a documentation standpoint, compare <a href="http://developer.linkedinlabs.com/tutorials/jsapi_profile/">LinkedIn's User Profile documentation</a> to <a href="https://developers.facebook.com/docs/graph-api/reference/user/">Facebook's</a></p>
 			<p>LinkedIn also appears to have much greater initial restrictions on API use limiting the number of API calls to login to 5000, and overall API calls to 100,000 per day. Out of the box that's not much power to build an significant app, you can really just play around with it. Greater use requires an application to their Vetted API program, some APIs like people search may require you to be vetted for anything more than a few dozen calls a day.  API Terms and Conditions are <a href="https://developer.linkedin.com/documents/linkedin-apis-terms-use">here</a>.
-		  <p><a href="https://developer.linkedin.com/apis"/>API Documentation</a></p>
+		  <p><a href="https://developer.linkedin.com/apis"/>API Documentation</a> and <a href="http://developer.linkedinlabs.com/jsapi-console/">API Console</a></p>
 		  <div id="profiles"></div>
-          <p><script type="IN/Login"></script></p>
-       </div>
+          <p>
+		<script type="IN/Login">
+			<div id="connectionstest">
+		  	<p>Current User's Connections:</p>
+		  	<div id="connectionsdata"></div>
+			</div>
+			</script></p>
+       		</div>
         <div class="col-lg-4">
           <h2>Twitter</h2>
           <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
