@@ -69,7 +69,7 @@
 		    connHTML = connHTML + connections[id].firstName + " " + connections[id].lastName + "</a>";
 		    connHTML = connHTML + " " + connections[id].headline + " " + connections[id].lastName;
 		    for (position in connections[id].positions) {
-		        if (position.hasProperty('title')) {
+		        if (position.hasOwnProperty('title')) {
 					connHTML = connHTML + position.title + " at " + position.company;
 				}
 		    }
