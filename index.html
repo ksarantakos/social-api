@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Social API</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -67,7 +67,7 @@
 
 		    connHTML = connHTML + "&nbsp;<a href=\"" + connections[id].publicProfileUrl + "\">";
 		    connHTML = connHTML + connections[id].firstName + " " + connections[id].lastName + "</a>";
-		    connHTML = connHTML + " " + connections[id].headline + " " + connections[id].lastName;
+		    connHTML = connHTML + " " + connections[id].headline + " ";
 		    for (position in connections[id].positions) {
 		        if (position.hasOwnProperty('title')) {
 					connHTML = connHTML + position.title + " at " + position.company;
@@ -237,6 +237,7 @@
         <div class="col-lg-4">
           <h2>Google+</h2>
           <p>Googles answer to facebook, large user base built on top of gmail and google apps.</p>
+		  <p>Goolge API docs <a href="https://developers.google.com/+/api/">here.</a></p>
           <p><a class="btn btn-default" href="gplus.html">View details &raquo;</a></p>
         </div>
       </div>
